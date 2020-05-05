@@ -24,19 +24,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.jdbcAuthentication()
+//        	.dataSource(dataSource)//no matter if its embedded or mySQL, it will be passed in by Autowired and use it 
+//        	.withDefaultSchema()///This will automatically genearate User and Authorities tables in your datasource
+//        	.withUser(
+//        			User.withUsername("user")
+//        			.password("pass")
+//        			.roles("USER")
+//        			)
+//        	.withUser(
+//        			User.withUsername("admin")
+//        			.password("pass")
+//        			.roles("ADMIN")
+//        	);
+        
         auth.jdbcAuthentication()
-        	.dataSource(dataSource)//no matter if its embedded or mySQL, it will be passed in by Autowired and use it 
-        	.withDefaultSchema()///This will automatically genearate User and Authorities tables in your datasource
-        	.withUser(
-        			User.withUsername("user")
-        			.password("pass")
-        			.roles("USER")
-        			)
-        	.withUser(
-        			User.withUsername("admin")
-        			.password("pass")
-        			.roles("ADMIN")
-        	);
+    	.dataSource(dataSource);
     }
 
     @Override
