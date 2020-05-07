@@ -55,26 +55,12 @@ public class GamesService {
 		return allGamesForPlayer;
 	}
 
-	public void deleteAllGamesForPlayer(int playerId) {
-//		List<Games> allGamesForPlayer = this.getAllGamesForPlayer(playerId);
-//		for (Games games : allGamesForPlayer) {
-//			gamesRepository.deleteById(games.getGameId());
-//		}		
-	}
+//	public void deleteAllGamesForPlayer(int playerId) {
+////		List<Games> allGamesForPlayer = this.getAllGamesForPlayer(playerId);
+////		for (Games games : allGamesForPlayer) {
+////			gamesRepository.deleteById(games.getGameId());
+////		}		
+//	}
 
-	public void createGameTable() {
-		this.jdbcTemplate.execute("CREATE TABLE `games` (\r\n" + 
-				"  `game_id` int(11) NOT NULL AUTO_INCREMENT,\r\n" + 
-				"  `dice1` int(11) NOT NULL,\r\n" + 
-				"  `dice2` int(11) NOT NULL,\r\n" + 
-				"  `game_date_time` varchar(255) DEFAULT NULL,\r\n" + 
-				"  `is_win` int(11) NOT NULL,\r\n" + 
-				"  `player_id` int(11) NOT NULL,\r\n" +
-				"  PRIMARY KEY (`game_id`),\r\n" +
-				"  CONSTRAINT `player` FOREIGN KEY (`player_id`) REFERENCES player(`player_id`) ON UPDATE CASCADE ON DELETE CASCADE\r\n"  + 
-				") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
-		
-	}
-	
 
 }

@@ -21,7 +21,7 @@ public class PlayerService {
 	
 	//GET PLAYER BY playerId//
 	public Player getPlayerById(int playerId) {
-		return playerRepository.findById(playerId).get();
+		return playerRepository.findById(playerId).get();		 
 	}
 	
 	///GET ALL PLAYERS///
@@ -66,16 +66,5 @@ public class PlayerService {
 		return usedNames.contains(playerName);
 	}
 	
-	//Method for table creation. Used during developing and testing JDBC version
-	public void createTablePlayer() {
-		this.jdbcTemplate.execute("CREATE TABLE `player` (\r\n" + 
-				"  `player_id` int(11) NOT NULL AUTO_INCREMENT,\r\n" + 
-				"  `player_log_name` varchar(255) DEFAULT NULL,\r\n" + 
-				"  `player_log_pass` varchar(255) DEFAULT NULL,\r\n" + 
-				"  `player_name` varchar(255) DEFAULT NULL,\r\n" + 
-				"  `player_reg_date` varchar(255) DEFAULT NULL,\r\n" + 
-				"  PRIMARY KEY (`player_id`)\r\n" + 
-				") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
-	}
 
 }

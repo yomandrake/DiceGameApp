@@ -22,13 +22,11 @@ CREATE TABLE player (
 -- 
 -- Create table games
 CREATE TABLE `games` (
-  `game_id` int(11) NOT NULL AUTO_INCREMENT,
+  `game_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `dice1` int(11) NOT NULL,
   `dice2` int(11) NOT NULL,
   `game_date_time` varchar(255) DEFAULT NULL,
   `is_win` int(11) NOT NULL,
   `player_id` int(11) NOT NULL,
-  `player_player_id` int(11) DEFAULT NULL,
-  KEY `FK4yxsr8bglovbii1r51mg3l0hl` (`player_player_id`),
-  CONSTRAINT `FK4yxsr8bglovbii1r51mg3l0hl` FOREIGN KEY (`player_player_id`) REFERENCES `player` (`player_id`)
+	FOREIGN KEY (`player_id`) REFERENCES `player` (`player_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4

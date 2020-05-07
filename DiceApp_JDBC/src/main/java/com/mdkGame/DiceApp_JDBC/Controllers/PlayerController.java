@@ -1,10 +1,12 @@
 package com.mdkGame.DiceApp_JDBC.Controllers;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import com.mdkGame.DiceApp_JDBC.Services.GamesService;
 import com.mdkGame.DiceApp_JDBC.Services.PlayerService;
 import com.mdkGame.DiceApp_JDBC.Services.StatsService;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class PlayerController {
 
@@ -29,9 +32,9 @@ public class PlayerController {
 	@Autowired
 	private StatsService statsService;
 	
-	////////////////////
+	/////////////////////
 	/*--POST REQUESTs--*/
-	////////////////////
+	/////////////////////
 	//POST -ADD NEW PLAYER
 	@RequestMapping(method=RequestMethod.POST, value = "/players")
 	public ResponseEntity<String> addPlayer(@RequestBody Player newPlayer){		
@@ -48,32 +51,63 @@ public class PlayerController {
 	////////////////////
 	///GET ALL PLAYERS
 	@RequestMapping("/players")//GET ALL PLAYERS
-	public List<PlayerDTO> getAllPlayers() {
-		//Get All players in a List, and calculate their Stats
-		List<Player> allPlayers = playerService.getAllPlayers();
-		allPlayers.forEach(player -> player.setAvgIsWin(statsService.getStatics(gamesService.getAllGamesForPlayer(player.getPlayerId())).getAvgIsWin()));
-		//Create List of DTO, and populate with objectos converted to DTOs
-		List<PlayerDTO> allPlayersDTO = new ArrayList<>();
-		allPlayers.forEach(player -> allPlayersDTO.add(new PlayerDTO(player)));
-		return allPlayersDTO;
+	public ResponseEntity<?> getAllPlayers() {
+		List<Player> listPlayers;
+		try {
+			listPlayers = playerService.getAllPlayers();
+			listPlayers.forEach(player -> player.setAvgIsWin(statsService.getStatics(gamesService.getAllGamesForPlayer(player.getPlayerId())).getAvgIsWin()));
+			//Create List of DTO, and populate with objetos converted to DTOs
+			List<PlayerDTO> allPlayersDTO = new ArrayList<>();
+			listPlayers.forEach(player -> allPlayersDTO.add(new PlayerDTO(player)));			
+			return new ResponseEntity<>(allPlayersDTO,HttpStatus.OK);
+		}
+		 catch (Exception e)
+        {
+            String errorString =  "ERROR " + e.getMessage();
+            System.out.println(errorString);
+            return new ResponseEntity<>( errorString , HttpStatus.BAD_REQUEST);
+        }
 	}
+	
 	///GET PLAYER BY ID
 	@RequestMapping(method=RequestMethod.GET, value = "/players/{playerId}")
-	public PlayerDTO getPlayer(@PathVariable int playerId) {
-		//Get a Player by PlayerId
-		Player requestedPlayer = playerService.getPlayerById(playerId); 
-		//Calculate Stats
-		requestedPlayer.setAvgIsWin(statsService.getStatics(gamesService.getAllGamesForPlayer(playerId)).getAvgIsWin());
-		return new PlayerDTO(requestedPlayer);
+	public ResponseEntity<?> getPlayer(@PathVariable int playerId) {
+		Player requestedPlayer;
+		try {
+			requestedPlayer = playerService.getPlayerById(playerId); 
+			return new ResponseEntity<>(new PlayerDTO(requestedPlayer),HttpStatus.OK);
+		}
+		 catch (Exception e)
+        {
+            String errorString =  "ERROR " + e.getMessage();
+            System.out.println(errorString);
+            return new ResponseEntity<>( errorString , HttpStatus.BAD_REQUEST);
+        }
+		
 	}
+	
+	
 	
 	////////////////////	
 	/*--PUT REQUESTs--*/
 	////////////////////
 	//PUT -UPDATE PLAYER
 	@RequestMapping(method=RequestMethod.PUT, value = "/players")
-	public void updatePlayer(@RequestBody Player newPlayer) {		
-		playerService.updatePlayer(newPlayer);
+	public ResponseEntity<String> updatePlayer(@RequestBody Player newPlayer) {
+		
+		try {
+			playerService.updatePlayer(newPlayer);
+			return new ResponseEntity<>("Player Updated",HttpStatus.OK);
+		}
+		 catch (Exception e)
+        {
+            String errorString =  "ERROR " + e.getMessage();
+            System.out.println(errorString);
+            return new ResponseEntity<>( errorString , HttpStatus.BAD_REQUEST);
+        }
+		
+		
+		
 	}
 	
 	///////////////////////
@@ -81,10 +115,20 @@ public class PlayerController {
 	///////////////////////
 	//DELETE PLAYER
 	@RequestMapping(method=RequestMethod.DELETE, value = "/players/{playerId}")
-	public void deletePlayer(@PathVariable int playerId) {
-		//Next is not needed in JDBC if the table are well initiated with Cascade Constrain
-		//gamesService.deleteAllGamesForPlayer(playerId);
-		playerService.deletePlayer(playerId);
+	public ResponseEntity<String> deletePlayer(@PathVariable int playerId) {
+		try {
+			//Next is not needed in JDBC if the table are well initiated with Cascade Constrain
+			//gamesService.deleteAllGamesForPlayer(playerId);
+			playerService.deletePlayer(playerId);
+			return new ResponseEntity<>( "Player and all its games deleted" , HttpStatus.OK);
+		}
+		 catch (Exception e)
+        {
+            String errorString =  "ERROR " + e.getMessage();
+            System.out.println(errorString);
+            return new ResponseEntity<>( errorString , HttpStatus.BAD_REQUEST);
+        }
+		
 	}
 	
 		
@@ -102,10 +146,6 @@ public class PlayerController {
 		}
 		
 	}
-	//POST METHOD for creatTables
-	@RequestMapping(method=RequestMethod.POST, value = "/players/createTables")
-	public void createPlayerTable() {
-		playerService.createTablePlayer();
-	}
+
 	
 }
