@@ -12,6 +12,7 @@ public class Games {
 	private String gameDateTime;
 	private int dice1;
 	private int dice2;
+	private int dice3;
 	private int isWin;
 	
 //	@MappedCollection(idColumn = "playerId")
@@ -21,16 +22,17 @@ public class Games {
 	private int playerId;
 	
 	public Games() {
-					
 	}
+	
 	@PersistenceConstructor
 	public Games(int playerId) {
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		this.setGameDateTime(currentDateTime.toString());
 		this.dice1 = new Random().nextInt(7);
 		this.dice2 = new Random().nextInt(7);
+		this.dice3 = new Random().nextInt(7);
 		///Decide whether is a Win or Not
-		if(this.dice1 == 6 && this.dice2 == 6) {
+		if( (this.dice1 == this.dice2 && this.dice2 == this.dice3) || (this.dice1 + this.dice2 + this.dice3 >= 12)) {
 			//this.setWin(true);
 			this.isWin = 1;
 		}else {
@@ -85,6 +87,15 @@ public class Games {
 		return dice2;
 	}
 
+	public int getDice3() {
+		return dice3;
+	}
+
+	public void setDice3(int dice3) {
+		this.dice3 = dice3;
+	}
+	
+
 
 	public void setDice2(int dice2) {
 		this.dice2 = dice2;
@@ -106,7 +117,7 @@ public class Games {
 	public void setPlayerId(int playerId) {
 		this.playerId = playerId;
 	}
-	
+
 
 	
 

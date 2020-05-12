@@ -14,7 +14,6 @@ public class Player {
 	@Transient
 	private float playerWinStats = (float) 0.00;
 
-	//Providing an all arguments constructor for jdbcRepository to use it
 	@PersistenceConstructor
 	public Player(int playerId, String playerLogName, String playerLogPass, String playerName, String playerRegDate) {
 		this.playerId = playerId;
@@ -22,7 +21,6 @@ public class Player {
 		this.playerLogPass = playerLogPass;
 		this.playerName = playerName;
 		this.playerRegDate = playerRegDate;
-//		this.playerWinStats = playerWinStats;
 	}
 	
 	public Player() {

@@ -25,6 +25,7 @@ CREATE TABLE `games` (
   `game_id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `dice1` int(11) NOT NULL,
   `dice2` int(11) NOT NULL,
+  `dice3` int(11) NOT NULL,
   `game_date_time` varchar(255) DEFAULT NULL,
   `is_win` int(11) NOT NULL,
   `player_id` int(11) NOT NULL,

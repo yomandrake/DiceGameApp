@@ -15,7 +15,7 @@ public class Stats {
 		this.qtGames = qtGames;
 		this.qtIsWin = qtIsWin;
 		if(qtGames != 0) {
-			this.avgIsWin = this.getQtIsWin() / this.getQtGames();
+			this.avgIsWin = (float) this.getQtIsWin() / this.getQtGames();
 		}else {
 			this.avgIsWin = (float) 0.0;
 		}

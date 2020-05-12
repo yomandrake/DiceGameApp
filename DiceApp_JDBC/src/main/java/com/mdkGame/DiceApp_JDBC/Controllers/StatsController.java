@@ -30,14 +30,14 @@ public class StatsController {
 	private PlayerService playerService;
 	
 	//GET General Statics for all Games
-	@RequestMapping(method=RequestMethod.GET,value = "/players/stats")//GET STATISTICS FROM ALL PLAYERs 
+	@RequestMapping(method=RequestMethod.GET,value = "/players/stats")
 	public Stats getGeneralStatics() {
 		List<Games> everyGame = gamesService.getAllGames();
 		return statsService.getStatics(everyGame);
 	}
 	
 	//GET Statics for one player by playerId
-	@RequestMapping(method=RequestMethod.GET,value = "/players/{playerId}/stats")//GET STATISTICS FROM ALL PLAYERS
+	@RequestMapping(method=RequestMethod.GET,value = "/players/{playerId}/stats")
 	public Stats getStaticsForPlayerById(@PathVariable int playerId) {
 		List<Games> allGamesForPlayer = gamesService.getAllGamesForPlayer(playerId);
 		return statsService.getStatics(allGamesForPlayer);
@@ -49,7 +49,7 @@ public class StatsController {
 		//Get all Games
 		List<Player> allPlayers = playerService.getAllPlayers();
 		allPlayers.forEach(player -> player.setAvgIsWin(statsService.getStatics(gamesService.getAllGamesForPlayer(player.getPlayerId())).getAvgIsWin()));
-		allPlayers.sort(Comparator.comparing(Player::getAvgIsWin));//Tested outside App
+		allPlayers.sort(Comparator.comparing(Player::getAvgIsWin));
 		return new PlayerDTO(allPlayers.get(allPlayers.size()-1));
 	}
 	
@@ -59,7 +59,7 @@ public class StatsController {
 		//Get all Games
 		List<Player> allPlayers = playerService.getAllPlayers();
 		allPlayers.forEach(player -> player.setAvgIsWin(statsService.getStatics(gamesService.getAllGamesForPlayer(player.getPlayerId())).getAvgIsWin()));
-		allPlayers.sort(Comparator.comparing(Player::getAvgIsWin));//Tested outside App
+		allPlayers.sort(Comparator.comparing(Player::getAvgIsWin));
 		return new PlayerDTO(allPlayers.get(0));
 	}
 	
