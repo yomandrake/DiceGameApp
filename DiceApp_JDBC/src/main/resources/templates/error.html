@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> SQUARES </title>
+  
+  <style>
+    body {
+      background: black;      
+    }
+    p{
+      color: white;
+    }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+  <script type="text/javascript" th:src="@{/js/sketchSquares.js}"></script>
+ 
+</head>
+
+<body>
+	<h1 style="text-align: center; color:white">
+		"Squares"
+	</h1>
+
+  <div class = "p5" id='container'></div>
+  <div class = "p5" id='container2'></div>
+
+  <p>Try pressing 'a' </a>.</p>
+  <p>Visit <a href="../../index.html"> Home </a>.</p>
+
+</body>
+
+</html>
